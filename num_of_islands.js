@@ -1,4 +1,4 @@
-function largest(array) {
+function numOfIslands(array) {
     var visited = [
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
@@ -9,13 +9,10 @@ function largest(array) {
     var result = 0;
     for (var i = 0; i < visited.length; i++) {
         for (var j = 0; j < visited[0].length; j++) {
-            if (array[i][j] == 1 && visited[i][j] != 1) {
-                count = {
-                    value: 1 
-                };
-                DFS(array, i, j, visited, count); // pass value by reference we have to pass value inside object like we have pointer in C
+            if (array[i][j] == 1 && visited[i][j] != 1) {                
+                DFS(array, i, j, visited); 
 
-                result = Math.max(result, count.value);
+                result++;           
             }
         }
     }
@@ -24,7 +21,7 @@ function largest(array) {
 }
 
 
-function DFS(array, i, j, visited, count) {
+function DFS(array, i, j, visited) {
 
     var rowNbr = [-1, -1, -1, 0, 0, 1, 1, 1];
     var colNbr = [-1, 0, 1, -1, 1, -1, 0, 1];
@@ -36,9 +33,8 @@ function DFS(array, i, j, visited, count) {
     for (var k = 0; k < 8; ++k) {
         if (isSafe(array, i + rowNbr[k], j + colNbr[k],
                 visited)) {
-            count.value = count.value + 1;
             DFS(array, i + rowNbr[k], j + colNbr[k],
-                visited, count);
+                visited);
         }
     }
 }
@@ -53,10 +49,10 @@ function main() {
     var array = [
         [0, 0, 1, 1, 0],
         [1, 0, 1, 1, 0],
-        [0, 1, 0, 0, 0],
-        [0, 0, 0, 1, 1]
+        [0, 0, 0, 0, 0],
+        [1, 0, 1, 0, 1]
     ];
-    var result = largest(array);
+    var result = numOfIslands(array);
     console.log(result);
 }
 
